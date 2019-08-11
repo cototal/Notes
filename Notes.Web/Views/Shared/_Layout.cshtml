@@ -1,9 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@inject  AssetVersionFinder AssetVersionFinder
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Notes</title>
+    <link type="text/css" rel="stylesheet" href="~/@AssetVersionFinder.GetVersionedAsset("main.css")" />
 </head>
 <body>
     <ul>
@@ -11,6 +13,7 @@
         <li><a asp-action="Create" asp-controller="Notes">New Note</a></li>
     </ul>
     @RenderBody()
+    <script src="~/@AssetVersionFinder.GetVersionedAsset("main.js")"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
