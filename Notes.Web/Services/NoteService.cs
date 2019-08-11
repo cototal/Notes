@@ -24,10 +24,33 @@ namespace Notes.Web.Services
             return await _notes.Find(n => true).ToListAsync();
         }
 
+        public async Task<Note> Get(string id, bool skipAccess = false)
+        {
+            var note = await _notes.Find(n => n.Id == id).FirstOrDefaultAsync();
+            if (!skipAccess)
+            {
+                ++note.AccessCount;
+                note.AccessedAt = DateTime.Now;
+                await _notes.ReplaceOneAsync(n => n.Id == note.Id, note);
+            }
+            return note;
+        }
+
         public async Task<Note> Create(Note note)
         {
             await _notes.InsertOneAsync(note);
             return note;
+        }
+
+        public async Task<Note> Update(Note updatedNote)
+        {
+            await _notes.ReplaceOneAsync(n => n.Id == updatedNote.Id, updatedNote);
+            return updatedNote;
+        }
+
+        public async Task Remove(string id)
+        {
+            await _notes.DeleteOneAsync(n => n.Id == id);
         }
     }
 }

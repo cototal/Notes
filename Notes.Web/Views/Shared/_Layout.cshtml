@@ -6,6 +6,10 @@
     <title>@ViewData["Title"] - Notes</title>
 </head>
 <body>
+    <ul>
+        <li><a asp-action="Index" asp-controller="Notes">Notes</a></li>
+        <li><a asp-action="Create" asp-controller="Notes">New Note</a></li>
+    </ul>
     @RenderBody()
     @RenderSection("Scripts", required: false)
 </body>

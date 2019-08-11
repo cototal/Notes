@@ -1,0 +1,52 @@
+﻿@model EditNote
+@{
+    ViewData["Title"] = "Edit Note";
+}
+
+<h1>Edit Note</h1>
+
+<form asp-action="Edit">
+    <div asp-validation-summary="All"></div>
+    <ol class="list-unstyled">
+        <li>
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" />
+                <span asp-validation-for="Title"></span>
+            </div>
+        </li>
+        <li>
+            <div class="form-group">
+                <label asp-for="Content"></label>
+                <textarea asp-for="Content"></textarea>
+                <span asp-validation-for="Content"></span>
+            </div>
+        </li>
+        <li>
+            <div class="form-group">
+                <label asp-for="Category"></label>
+                <input asp-for="Category" />
+                <span asp-validation-for="Category"></span>
+            </div>
+        </li>
+        <li>
+            <div class="form-group">
+                <label asp-for="Sequence"></label>
+                <input asp-for="Sequence" />
+                <span asp-validation-for="Sequence"></span>
+            </div>
+        </li>
+        <li>
+            <div class="form-group">
+                <label asp-for="Tags"></label>
+                <input asp-for="Tags" />
+                <span asp-validation-for="Tags"></span>
+            </div>
+        </li>
+        <li>
+            <div class="form-group">
+                <input type="submit" value="Update Note" />
+            </div>
+        </li>
+    </ol>
+</form>

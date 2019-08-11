@@ -19,18 +19,18 @@ namespace Notes.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var note = new Note
-            {
-                Title = "Sample",
-                Category = "Samples",
-                Tags = new List<string> { "one", "two", "three" },
-                Content = "This is a **sample** note.",
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-                AccessedAt = DateTime.Now,
-                AccessCount = 1
-            };
-            await _noteService.Create(note);
+            // var note = new Note
+            // {
+            //     Title = "Sample",
+            //     Category = "Samples",
+            //     Tags = new List<string> { "one", "two", "three" },
+            //     Content = "This is a **sample** note.",
+            //     CreatedAt = DateTime.Now,
+            //     UpdatedAt = DateTime.Now,
+            //     AccessedAt = DateTime.Now,
+            //     AccessCount = 1
+            // };
+            // await _noteService.Create(note);
             var notes = await _noteService.Get();
             return View(notes);
         }

@@ -1,0 +1,9 @@
+﻿@model Note
+@{
+    ViewData["Title"] = "Note";
+}
+
+<h1>@Model.Title</h1>
+<div class="note-content">
+    @Html.Raw(Model.Content)
+</div>

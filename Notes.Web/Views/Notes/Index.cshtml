@@ -1,0 +1,37 @@
+﻿@model System.Collections.Generic.IEnumerable<Note>
+@{
+    ViewData["Title"] = "Notes";
+}
+
+<h1>Notes</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Sequence</th>
+            <th>Tags</th>
+            <th>Accesses</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var note in Model)
+        {
+        <tr>
+            <td><a asp-action="Details" asp-route-id="@note.Id">@note.Title</a></td>
+            <td>@note.Category</td>
+            <td>@note.Sequence</td>
+            <td>@string.Join(',', note.Tags)</td>
+            <td>@note.AccessCount</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@note.Id">Edit</a> |
+                <form method="post" asp-action="Delete" asp-route-id="@note.Id">
+                    <input type="submit" value="Delete" />
+                </form>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
