@@ -41,6 +41,7 @@ namespace Notes.Web
             services.AddSingleton<IVerifyAdminEmailOptions>(srv => new VerifyAdminEmailOptions(Configuration.GetValue<string>("AdminEmails")));
             services.AddSingleton<NoteService>(srv => new NoteService(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSingleton<AssetVersionFinder>();
+            services.AddSingleton<MarkdownConverter>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

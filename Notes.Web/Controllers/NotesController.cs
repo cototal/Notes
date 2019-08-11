@@ -12,10 +12,12 @@ namespace Notes.Web.Controllers
     public class NotesController : BaseController
     {
         private readonly NoteService _noteService;
+        private readonly MarkdownConverter _markdown;
 
-        public NotesController(NoteService noteService)
+        public NotesController(NoteService noteService, MarkdownConverter markdown)
         {
             _noteService = noteService;
+            _markdown = markdown;
         }
 
         [HttpGet]
@@ -38,6 +40,8 @@ namespace Notes.Web.Controllers
             {
                 return NotFound();
             }
+
+            note.Content = _markdown.ToHtml(note.Content);
             return View(note);
         }
 

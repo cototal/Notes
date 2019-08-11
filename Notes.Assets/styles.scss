@@ -1,1 +1,8 @@
-@import "~bulma/bulma.sass"
+@import "~bulma/bulma.sass";
+
+.note-content {
+    table {
+        @extend .table;
+        @extend .is-striped;
+    }
+}
