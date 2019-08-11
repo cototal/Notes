@@ -8,11 +8,32 @@
     <link type="text/css" rel="stylesheet" href="~/@AssetVersionFinder.GetVersionedAsset("main.css")" />
 </head>
 <body>
-    <ul>
-        <li><a asp-action="Index" asp-controller="Notes">Notes</a></li>
-        <li><a asp-action="Create" asp-controller="Notes">New Note</a></li>
-    </ul>
-    @RenderBody()
+    <nav class="navbar is-link" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a asp-action="Index" asp-controller="Home" class="navbar-item">Note DB</a>
+            <a class="navbar-burger burger" role="button" aria-label="menu" aria-expanded="false" data-target="main-menu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="main-menu" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" asp-action="Index" asp-controller="Notes">Notes</a>
+                <a class="navbar-item" asp-action="Create" asp-controller="Notes">New Note</a>
+            </div>
+            <div class="navbar-end">
+                <form asp-action="SignOut" asp-controller="Home" method="post">
+                    <div class="navbar-item">
+                        <input class="button is-light" type="submit" value="Sign Out" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        @RenderBody()
+    </div>
     <script src="~/@AssetVersionFinder.GetVersionedAsset("main.js")"></script>
     @RenderSection("Scripts", required: false)
 </body>

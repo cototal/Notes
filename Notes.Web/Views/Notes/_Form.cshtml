@@ -1,0 +1,34 @@
+﻿@model BaseNoteForm
+
+<div class="is-danger" asp-validation-summary="All"></div>
+<div class="columns">
+    <div class="column is-four-fifths">
+        <div class="field">
+            <label class="label" asp-for="Title"></label>
+            <input class="input" asp-for="Title" />
+            <p class="help is-danger" asp-validation-for="Title"></p>
+        </div>
+        <div class="field">
+            <label class="label" asp-for="Content"></label>
+            <textarea rows="30" class="textarea" asp-for="Content"></textarea>
+            <p class="help is-danger" asp-validation-for="Content"></p>
+        </div>
+    </div>
+    <div class="column">
+        <div class="field">
+            <label class="label" asp-for="Category"></label>
+            <input class="input" asp-for="Category" />
+            <p class="help is-danger" asp-validation-for="Category"></p>
+        </div>
+        <div class="field">
+            <label class="label" asp-for="Sequence"></label>
+            <input class="input" asp-for="Sequence" />
+            <p class="help is-danger" asp-validation-for="Sequence"></p>
+        </div>
+        <div class="field">
+            <label class="label" asp-for="Tags"></label>
+            <input class="input" asp-for="Tags" />
+            <p class="help is-danger" asp-validation-for="Tags"></p>
+        </div>
+    </div>
+</div>

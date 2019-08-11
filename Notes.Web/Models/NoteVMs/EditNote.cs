@@ -1,30 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Notes.Web.Models.NoteVMs
 {
-    public class EditNote
+    public class EditNote : BaseNoteForm
     {
-        public EditNote()
+        public EditNote() : base()
         {}
 
-        public EditNote(Note note)
-        {
-            Title = note.Title;
-            Content = note.Content;
-            Category = note.Category;
-            Sequence = note.Sequence;
-            Tags = string.Join(',', note.Tags);
-        }
-
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public string Category { get; set; }
-        public string Sequence { get; set; }
-        public string Tags { get; set; }
+        public EditNote(Note note) : base(note)
+        {}
 
         public Note ToNote(ref Note oldNote)
         {

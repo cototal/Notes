@@ -6,25 +6,13 @@ using System.Threading.Tasks;
 
 namespace Notes.Web.Models.NoteVMs
 {
-    public class NewNote
+    public class NewNote : BaseNoteForm
     {
-        public NewNote()
-        {}
+        public NewNote() : base()
+        { }
 
-        public NewNote(Note note)
-        {
-            Title = note.Title;
-            Content = note.Content;
-            Category = note.Category;
-            Sequence = note.Sequence;
-            Tags = string.Join(',', note.Tags);
-        }
-
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public string Category { get; set; }
-        public string Sequence { get; set; }
-        public string Tags { get; set; }
+        public NewNote(Note note) : base(note)
+        { }
 
         public Note ToNote()
         {
@@ -32,7 +20,7 @@ namespace Notes.Web.Models.NoteVMs
             {
                 Title = Title,
                 Content = Content,
-                Category = Category,
+                Category = string.IsNullOrWhiteSpace(Category) ? "Uncategorized" : Category,
                 Sequence = Sequence,
                 Tags = Tags.Split(",").Select(t => t.Trim()),
                 CreatedAt = DateTime.Now,

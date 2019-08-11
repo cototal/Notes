@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Notes.Web.Models;
 using Notes.Web.Services;
@@ -19,18 +21,6 @@ namespace Notes.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // var note = new Note
-            // {
-            //     Title = "Sample",
-            //     Category = "Samples",
-            //     Tags = new List<string> { "one", "two", "three" },
-            //     Content = "This is a **sample** note.",
-            //     CreatedAt = DateTime.Now,
-            //     UpdatedAt = DateTime.Now,
-            //     AccessedAt = DateTime.Now,
-            //     AccessCount = 1
-            // };
-            // await _noteService.Create(note);
             var notes = await _noteService.Get();
             return View(notes);
         }
@@ -39,6 +29,19 @@ namespace Notes.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignOut()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Exit");
+        }
+
+        [AllowAnonymous]
+        public IActionResult Exit()
+        {
+            return View();
         }
     }
 }

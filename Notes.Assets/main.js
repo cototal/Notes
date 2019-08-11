@@ -1,4 +1,17 @@
 import "./styles.scss";
-import "cash-dom/dist/cash.js";
+import $ from "cash-dom";
 
-$("h1").css("color", "red");
+
+$(() => {
+    // Bulma navbar
+    const $navbarBurgers = $(".navbar-burger");
+    if ($navbarBurgers.length > 0) {
+        $navbarBurgers.each((idx, el) => {
+            const $el = $(el);
+            $el.on("click", () => {
+                const $target = $(`#${$el.data("target")}`);
+                $target.toggleClass("is-active");
+            });
+        });
+    }
+});
