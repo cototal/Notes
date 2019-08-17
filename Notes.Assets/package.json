@@ -12,6 +12,7 @@
   "dependencies": {
     "bulma": "^0.7.5",
     "cash-dom": "^4.1.4",
+    "codemirror": "^5.48.2",
     "parcel-bundler": "^1.12.3",
     "sass": "^1.22.9",
     "typescript": "^3.5.3"

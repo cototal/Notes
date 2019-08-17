@@ -16,13 +16,14 @@ namespace Notes.Web.Models.NoteVMs
 
         public Note ToNote()
         {
+            var tags = Tags == null ? new List<string>() : Tags.Split(",").Select(t => t.Trim());
             return new Note
             {
                 Title = Title,
                 Content = Content,
                 Category = string.IsNullOrWhiteSpace(Category) ? "Uncategorized" : Category,
                 Sequence = Sequence,
-                Tags = Tags.Split(",").Select(t => t.Trim()),
+                Tags = tags,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 AccessedAt = DateTime.Now,
