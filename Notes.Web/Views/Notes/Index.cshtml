@@ -3,9 +3,9 @@
     ViewData["Title"] = "Notes";
 }
 
-<h1>Notes</h1>
+<h1 class="title">Notes</h1>
 
-<table>
+<table class="table is-striped">
     <thead>
         <tr>
             <th>Title</th>
@@ -26,10 +26,12 @@
             <td>@string.Join(',', note.Tags)</td>
             <td>@note.AccessCount</td>
             <td>
-                <a asp-action="Edit" asp-route-id="@note.Id">Edit</a> |
-                <form method="post" asp-action="Delete" asp-route-id="@note.Id">
-                    <input type="submit" value="Delete" />
-                </form>
+                <div class="field has-addons">
+                    <a class="button is-small is-link is-outlined" asp-action="Edit" asp-route-id="@note.Id">Edit</a>
+                    <form method="post" asp-action="Delete" asp-route-id="@note.Id">
+                        <input class="button is-small is-danger is-outlined" type="submit" value="Delete" />
+                    </form>
+                </div>
             </td>
         </tr>
         }

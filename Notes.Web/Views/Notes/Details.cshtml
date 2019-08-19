@@ -3,7 +3,10 @@
     ViewData["Title"] = "Note";
 }
 
-<h1 class="title">@Model.Title</h1>
+<h1 class="title">
+    @Model.Title
+    <a class="button is-link is-outlined is-pulled-right" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+</h1>
 <div class="note-content">
     @Html.Raw(Model.Content)
 </div>
