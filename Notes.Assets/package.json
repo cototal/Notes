@@ -1,10 +1,11 @@
 {
-  "name": "Notes.Assets",
+  "name": "notes-assets",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel index.html -d ../Notes.Web/wwwroot/assets"
+    "dev": "parcel index.html -d ../Notes.Web/wwwroot/assets",
+    "build": "parcel build index.html"
   },
   "keywords": [],
   "author": "",
