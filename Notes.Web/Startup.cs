@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Cototal.AspNetCore.ApprovedEmailAccess.Middleware;
+﻿using Cototal.AspNetCore.ApprovedEmailAccess.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,12 +11,12 @@ namespace Notes.Web
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -39,6 +33,13 @@ namespace Notes.Web
                     options.ClientId = googleAuthConfig.ClientId;
                     options.ClientSecret = googleAuthConfig.ClientSecret;
                 });
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor |
+                    Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto;
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+            });
             services.AddSingleton<IVerifyAdminEmailOptions>(srv => new VerifyAdminEmailOptions(Configuration.GetValue<string>("AdminEmails")));
             services.AddSingleton<NoteService>(srv => new NoteService(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSingleton<AssetVersionFinder>();
@@ -60,12 +61,7 @@ namespace Notes.Web
 
             if (env.IsProduction())
             {
-                app.UseForwardedHeaders(new ForwardedHeadersOptions
-                {
-                    // Docker isolates this app, so allowing all hosts is ok.
-                    AllowedHosts = new List<string>(),
-                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-                });
+                app.UseForwardedHeaders();
             }
 
             app.UseAuthentication();
