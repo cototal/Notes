@@ -6,6 +6,7 @@ using Cototal.AspNetCore.ApprovedEmailAccess.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,6 +56,16 @@ namespace Notes.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+            }
+
+            if (env.IsProduction())
+            {
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    // Docker isolates this app, so allowing all hosts is ok.
+                    AllowedHosts = new List<string>(),
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                });
             }
 
             app.UseAuthentication();
