@@ -15,7 +15,7 @@ namespace Notes.Web.Services
         public NoteService(string connectionString)
         {
             var client = new MongoClient(connectionString);
-            var database = client.GetDatabase("NoteDB");
+            var database = client.GetDatabase("notedb");
             _notes = database.GetCollection<Note>("notes");
         }
 
