@@ -12,6 +12,8 @@ RUN dotnet build "Notes.Web.csproj" -c Release -o /app
 RUN dotnet publish "Notes.Web.csproj" -c Release -o /app
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-stretch-slim
+ENV TZ=America/Chicago
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR /app
 EXPOSE 80
 COPY --from=build /app .

@@ -19,10 +19,9 @@ namespace Notes.Web.Controllers
             _noteService = noteService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var notes = await _noteService.Get();
-            return View(notes);
+            return RedirectToAction("Index", "Notes");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

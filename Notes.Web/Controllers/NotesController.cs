@@ -21,9 +21,9 @@ namespace Notes.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search = null)
         {
-            var notes = await _noteService.Get();
+            var notes = await _noteService.Find(search);
             return View(notes);
         }
 
@@ -35,7 +35,7 @@ namespace Notes.Web.Controllers
             {
                 return NotFound();
             }
-            var note = await _noteService.Get(id);
+            var note = await _noteService.FindOne(id);
             if (note == null)
             {
                 return NotFound();
@@ -46,7 +46,7 @@ namespace Notes.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View(new NewNote());
         }
@@ -71,7 +71,7 @@ namespace Notes.Web.Controllers
             {
                 return NotFound();
             }
-            var note = await _noteService.Get(id);
+            var note = await _noteService.FindOne(id);
             if (note == null)
             {
                 return NotFound();
@@ -87,7 +87,7 @@ namespace Notes.Web.Controllers
             {
                 return NotFound();
             }
-            var oldNote = await _noteService.Get(id);
+            var oldNote = await _noteService.FindOne(id);
             if (oldNote == null)
             {
                 return NotFound();
