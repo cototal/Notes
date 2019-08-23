@@ -1,10 +1,12 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Notes.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Notes.Web.Services
@@ -34,9 +36,9 @@ namespace Notes.Web.Services
             {
                 return await Find();
             }
-            var noteQuery = _notes.AsQueryable();
             var searchSegments = search.Split(" ");
-            foreach(var seg in searchSegments)
+            var doc = new BsonDocument();
+            foreach (var seg in searchSegments)
             {
                 var segParts = seg.Split(":");
                 if (segParts.Length < 2)
@@ -48,30 +50,24 @@ namespace Notes.Web.Services
                 switch (field)
                 {
                     case "title":
-                        noteQuery = noteQuery.Where(n => n.Title.Contains(segParts[1]));
+                        doc.Add("Title", new BsonDocument { { "$regex", new BsonRegularExpression(Regex.Escape(segParts[1]), "i") } });
                         break;
                     case "category":
-                        noteQuery = noteQuery.Where(n => n.Category.Contains(segParts[1]));
+                        doc.Add("Category", new BsonDocument { { "$regex", new BsonRegularExpression(Regex.Escape(segParts[1]), "i") } });
                         break;
                     case "sequence":
-                        noteQuery = noteQuery.Where(n => n.Sequence.Contains(segParts[1]));
+                        doc.Add("Sequence", new BsonDocument { { "$regex", new BsonRegularExpression(Regex.Escape(segParts[1]), "i") } });
                         break;
                     case "tag":
-                        foreach (var val in values)
-                        {
-                            noteQuery = noteQuery.Where(n => n.Tags.Contains(val));
-                        }
+                        doc.Add("Tags", ListOfRegexes(values));
                         break;
                     case "content":
-                        foreach (var val in values)
-                        {
-                            noteQuery = noteQuery.Where(n => n.Content.Contains(val));
-                        }
+                        doc.Add("Content", ListOfRegexes(values));
                         break;
                 }
             }
 
-            return await noteQuery.ToListAsync();
+            return await _notes.Find(doc).ToListAsync();
         }
 
         public async Task<Note> FindOne(string id, bool skipAccess = false)
@@ -101,6 +97,18 @@ namespace Notes.Web.Services
         public async Task Remove(string id)
         {
             await _notes.DeleteOneAsync(n => n.Id == id);
+        }
+
+        private BsonDocument ListOfRegexes(IEnumerable<string> values)
+        {
+            var bsonElements = new List<BsonElement>();
+            foreach (var val in values)
+            {
+                bsonElements.Add(new BsonElement("$regex", new BsonRegularExpression(Regex.Escape(val), "i")));
+            }
+            var regexDoc = new BsonDocument(true);
+            regexDoc.AddRange(bsonElements);
+            return regexDoc;
         }
     }
 }
