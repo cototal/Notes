@@ -1,12 +1,17 @@
 ﻿@model System.Collections.Generic.IEnumerable<Note>
 @{
     ViewData["Title"] = "Notes";
+    var nextSortDir = 1;
+    if (null == ViewData["sortDir"] || (int)ViewData["sortDir"] == 1)
+    {
+        nextSortDir = -1;
+    }
 }
 
 <h1 class="title">Notes</h1>
 
 <form method="get">
-    <input class="input" type="text" placeholder="Search..." name="search" />
+    <input class="input" type="text" placeholder="Search..." value="@ViewData["search"]" name="search" />
     <input class="button is-link" type="submit" value="Go" />
     <a class="button" asp-action="Index">Clear</a>
 </form>
@@ -14,11 +19,25 @@
 <table class="table is-striped">
     <thead>
         <tr>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Sequence</th>
+            <th>
+                <a asp-action="Index" asp-route-sortBy="title" asp-route-search="@ViewData["search"]" asp-route-sortDir="@nextSortDir">Title</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortBy="category" asp-route-search="@ViewData["search"]" asp-route-sortDir="@nextSortDir">Category</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortBy="sequence" asp-route-search="@ViewData["search"]" asp-route-sortDir="@nextSortDir">Sequence</a>
+            </th>
             <th>Tags</th>
-            <th>Accesses</th>
+            <th>
+                <a asp-action="Index" asp-route-sortBy="accessCount" asp-route-search="@ViewData["search"]" asp-route-sortDir="@nextSortDir">Accesses</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortBy="createdAt" asp-route-search="@ViewData["search"]" asp-route-sortDir="@nextSortDir">CreatedAt</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortBy="accessedAt" asp-route-search="@ViewData["search"]" asp-route-sortDir="@nextSortDir">Last Access</a>
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -27,10 +46,20 @@
         {
         <tr>
             <td><a asp-action="Details" asp-route-id="@note.Id">@note.Title</a></td>
-            <td>@note.Category</td>
-            <td>@note.Sequence</td>
-            <td>@string.Join(',', note.Tags)</td>
+            <td>
+                <a asp-action="Index" asp-route-search="category:@note.Category">@note.Category</a>
+            </td>
+            <td>
+                <a asp-action="Index" asp-route-search="sequence:@note.Sequence">@note.Sequence</a>
+            </td>
+            <td>
+                @foreach (var tag in note.Tags)
+                {
+                    <a class="button is-link is-small" asp-action="Index" asp-route-search="tag:@tag">@tag</a>
+                }
             <td>@note.AccessCount</td>
+            <td>@note.CreatedAt</td>
+            <td>@note.AccessedAt</td>
             <td>
                 <div class="field has-addons">
                     <a class="button is-small is-link is-outlined" asp-action="Edit" asp-route-id="@note.Id">Edit</a>

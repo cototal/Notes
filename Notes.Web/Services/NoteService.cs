@@ -5,6 +5,7 @@ using Notes.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -25,16 +26,29 @@ namespace Notes.Web.Services
                 Builders<Note>.IndexKeys.Text(n => n.Content)));
         }
 
-        public async Task<List<Note>> Find()
+        private BsonDocument SortDocument(string sortBy = "accessedAt", int sortDir = -1)
         {
-            return await _notes.Find(n => true).ToListAsync();
+            if (Note.PropertyMap.ContainsKey(sortBy) && (sortDir == -1 || sortDir == 1))
+            {
+                return new BsonDocument { { Note.PropertyMap[sortBy], sortDir } };
+            }
+            return new BsonDocument { { "accessedAt", -1 } };
         }
 
-        public async Task<List<Note>> Find(string search)
+        private FindOptions FindOpts()
         {
+            return new FindOptions
+            {
+                Collation = new Collation("en")
+            };
+        }
+        
+        public async Task<List<Note>> Find(string search = null, string sortBy = "accessedAt", int sortDir = -1)
+        {
+            var sortDoc = new BsonDocument { { Note.PropertyMap[sortBy], sortDir } };
             if (string.IsNullOrWhiteSpace(search))
             {
-                return await Find();
+                return await _notes.Find(n => true, FindOpts()).Sort(SortDocument(sortBy, sortDir)).ToListAsync();
             }
             var searchSegments = search.Split(" ");
             var doc = new BsonDocument();
@@ -47,27 +61,22 @@ namespace Notes.Web.Services
                 }
                 var field = segParts[0];
                 var values = segParts[1].Split("-");
+                var name = string.Join(" ", values);
                 switch (field)
                 {
                     case "title":
-                        doc.Add("Title", new BsonDocument { { "$regex", new BsonRegularExpression(Regex.Escape(segParts[1]), "i") } });
-                        break;
                     case "category":
-                        doc.Add("Category", new BsonDocument { { "$regex", new BsonRegularExpression(Regex.Escape(segParts[1]), "i") } });
-                        break;
                     case "sequence":
-                        doc.Add("Sequence", new BsonDocument { { "$regex", new BsonRegularExpression(Regex.Escape(segParts[1]), "i") } });
+                        doc.Add(Note.PropertyMap[field], new BsonDocument { { "$regex", new BsonRegularExpression(Regex.Escape(name), "i") } });
                         break;
                     case "tag":
-                        doc.Add("Tags", ListOfRegexes(values));
-                        break;
+                    case "tags":
                     case "content":
-                        doc.Add("Content", ListOfRegexes(values));
+                        doc.Add(Note.PropertyMap[field], ListOfRegexes(values));
                         break;
                 }
             }
-
-            return await _notes.Find(doc).ToListAsync();
+            return await _notes.Find(doc, FindOpts()).Sort(SortDocument(sortBy, sortDir)).ToListAsync();
         }
 
         public async Task<Note> FindOne(string id, bool skipAccess = false)

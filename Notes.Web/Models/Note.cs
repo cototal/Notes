@@ -19,5 +19,23 @@ namespace Notes.Web.Models
         public DateTime UpdatedAt { get; set; }
         public DateTime AccessedAt { get; set; }
         public int AccessCount { get; set; }
+
+        public static Dictionary<string, string> PropertyMap {
+            get {
+                return new Dictionary<string, string>
+                {
+                    { "title", "Title" },
+                    { "content", "Content" },
+                    { "category", "Category" },
+                    { "sequence", "Sequence" },
+                    { "tag", "Tags" },
+                    { "tags", "Tags" },
+                    { "accessedAt", "AccessedAt" },
+                    { "createdAt", "CreatedAt" },
+                    { "accessCount", "AccessCount" },
+                    { "count", "AccessCount" }
+                };
+            }
+        }
     }
 }

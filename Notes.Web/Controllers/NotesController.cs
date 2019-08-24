@@ -21,9 +21,12 @@ namespace Notes.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string search = null)
+        public async Task<IActionResult> Index(string search = null, string sortBy = "accessedAt", int sortDir = -1)
         {
-            var notes = await _noteService.Find(search);
+            var notes = await _noteService.Find(search, sortBy, sortDir);
+            ViewData["search"] = search;
+            ViewData["sortBy"] = sortBy;
+            ViewData["sortDir"] = sortDir;
             return View(notes);
         }
 
