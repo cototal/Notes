@@ -48,7 +48,7 @@ namespace Notes.Web.Services
             var sortDoc = new BsonDocument { { Note.PropertyMap[sortBy], sortDir } };
             if (string.IsNullOrWhiteSpace(search))
             {
-                return await _notes.Find(n => true, FindOpts()).Sort(SortDocument(sortBy, sortDir)).ToListAsync();
+                return await _notes.Find(n => true, FindOpts()).Sort(SortDocument(sortBy, sortDir)).Limit(50).ToListAsync();
             }
             var searchSegments = search.Split(" ");
             var doc = new BsonDocument();
