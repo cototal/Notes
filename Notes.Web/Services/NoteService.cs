@@ -76,6 +76,7 @@ namespace Notes.Web.Services
                         break;
                 }
             }
+            // TODO: Check if document is empty (indicating invalid search) and return no results if so
             return await _notes.Find(doc, FindOpts()).Sort(SortDocument(sortBy, sortDir)).ToListAsync();
         }
 

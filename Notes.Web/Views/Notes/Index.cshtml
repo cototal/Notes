@@ -1,6 +1,6 @@
 ﻿@model System.Collections.Generic.IEnumerable<Note>
 @{
-    ViewData["Title"] = "Notes";
+    ViewData["Title"] = string.IsNullOrWhiteSpace((string)ViewData["search"]) ? "Index" : $"Search: {ViewData["search"]}";
     var nextSortDir = 1;
     if (null == ViewData["sortDir"] || (int)ViewData["sortDir"] == 1)
     {
