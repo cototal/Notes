@@ -44,6 +44,7 @@
     <tbody>
         @foreach (var note in Model)
         {
+        // TODO: Buttons need to replace spaces with hyphens
         <tr>
             <td><a asp-action="Details" asp-route-id="@note.Id">@note.Title</a></td>
             <td>

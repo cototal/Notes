@@ -1,15 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29201.188
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes.Web", "Notes.Web\Notes.Web.csproj", "{38717BBD-F3DF-43A8-8453-A83564430593}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B6C5B571-1010-415F-B9E5-FCC8A02973A0}"
-	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
-		README.md = README.md
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Web", "Notes.Web\Notes.Web.csproj", "{ABDB0B48-BB1F-454B-86A5-E0A2ADF21465}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{38717BBD-F3DF-43A8-8453-A83564430593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38717BBD-F3DF-43A8-8453-A83564430593}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38717BBD-F3DF-43A8-8453-A83564430593}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38717BBD-F3DF-43A8-8453-A83564430593}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABDB0B48-BB1F-454B-86A5-E0A2ADF21465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABDB0B48-BB1F-454B-86A5-E0A2ADF21465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABDB0B48-BB1F-454B-86A5-E0A2ADF21465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABDB0B48-BB1F-454B-86A5-E0A2ADF21465}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8E8A62B8-505B-4AAB-8B40-0ABFB5CE99F7}
+		SolutionGuid = {3B20264D-7CAC-4FA7-AE68-9F4A39442336}
 	EndGlobalSection
 EndGlobal

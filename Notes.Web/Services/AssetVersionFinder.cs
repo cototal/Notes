@@ -1,19 +1,15 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Notes.Web.Services
 {
     public class AssetVersionFinder
     {
-        private readonly IHostingEnvironment _env;
+        private readonly IWebHostEnvironment _env;
         private IDictionary<string, string> _fileList = new Dictionary<string, string>();
 
-        public AssetVersionFinder(IHostingEnvironment env)
+        public AssetVersionFinder(IWebHostEnvironment env)
         {
             _env = env;
         }
