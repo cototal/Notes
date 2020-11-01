@@ -6,9 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="Cototal.AspNetCore.ApprovedEmailAccess" Version="1.1.1" />
-    <PackageReference Include="Markdig.Signed" Version="0.18.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.1" />
-    <PackageReference Include="MongoDB.Driver" Version="2.10.1" />
+    <PackageReference Include="Markdig.Signed" Version="0.22.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.9" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.3" />
   </ItemGroup>
 
 

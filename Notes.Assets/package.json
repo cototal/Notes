@@ -11,10 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bulma": "^0.8.0",
-    "cash-dom": "^6.0.1",
-    "codemirror": "^5.50.2",
+    "bulma": "^0.9.1",
+    "cash-dom": "^8.1.0",
+    "codemirror": "^5.58.2",
     "parcel-bundler": "^1.12.4",
-    "sass": "^1.25.0"
+    "sass": "^1.28.0"
   }
 }
