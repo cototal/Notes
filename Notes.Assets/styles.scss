@@ -34,6 +34,14 @@
     }
 
     pre {
-        margin: 1em 0;
+        padding: 0;
+
+        code {
+            padding: 1rem;
+        }
     }
+}
+
+.CodeMirror, .CodeMirror-scroll {
+    min-height: 600px;
 }

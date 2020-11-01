@@ -6,7 +6,7 @@ namespace Notes.Web.Services
     {
         public string ToHtml(string content)
         {
-            var pipeline = new MarkdownPipelineBuilder().UsePipeTables().Build();
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
             return Markdown.ToHtml(content, pipeline);
         }
     }

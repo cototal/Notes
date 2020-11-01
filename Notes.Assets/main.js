@@ -1,3 +1,4 @@
+import "highlight.js/styles/monokai.css";
 import "./styles.scss";
 import "codemirror/mode/markdown/markdown";
 import "codemirror/mode/xml/xml";
@@ -9,7 +10,9 @@ import "codemirror/mode/yaml/yaml";
 import "codemirror/mode/clike/clike";
 import CodeMirror from "codemirror";
 import $ from "cash-dom";
+import hljs from "highlight.js";
 
+hljs.initHighlightingOnLoad();
 const codeArea = document.getElementById("code");
 
 if (codeArea != null) {
