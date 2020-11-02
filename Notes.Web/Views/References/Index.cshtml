@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Reference>
+@{
+    ViewData["Title"] = "reference Images";
+}
+
+<h1 class="title">Reference Images</h1>
+<a asp-action="Create" asp-controller="References">Add New Reference Image</a>
+<table class="table is-striped">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Tags</th>
+        <th>Created</th>
+        <th></th>
+    </tr>
+    @foreach (var reference in Model)
+    {
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@reference.Id">@reference.Name</a>
+            </td>
+            <td>@reference.Description</td>
+            <td>
+                @foreach (var tag in reference.Tags)
+                {
+                    <a class="button is-link is-small" asp-action="Index" asp-route-search="tag:@tag">@tag</a>
+                }
+            </td>
+            <td>@reference.CreatedAt</td>
+            <td>
+                <a href="/uploads/@reference.Path">Download</a>
+            </td>
+        </tr>
+    }
+</table>

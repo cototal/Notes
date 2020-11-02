@@ -1,4 +1,4 @@
-﻿@model System.Collections.Generic.IEnumerable<Note>
+﻿@model IEnumerable<Note>
 @{
     ViewData["Title"] = string.IsNullOrWhiteSpace((string)ViewData["search"]) ? "Index" : $"Search: {ViewData["search"]}";
     var nextSortDir = 1;

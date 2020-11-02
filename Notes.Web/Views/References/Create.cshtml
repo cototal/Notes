@@ -1,0 +1,26 @@
+﻿@model NewReference
+
+    <h1 class="title">New Reference</h1>
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="is-danger" asp-validation-summary="All"></div>
+    <div class="field">
+        <label class="label" asp-for="Name"></label>
+        <input class="input" asp-for="Name" />
+        <p class="help is-danger" asp-validation-for="Name"></p>
+    </div>
+    <div class="field">
+        <label class="label" asp-for="Description"></label>
+        <textarea class="textarea" asp-for="Description"></textarea>
+        <p class="help is-danger" asp-validation-for="Description"></p>
+    </div>
+    <div class="field">
+        <label class="label" asp-for="Tags"></label>
+        <input class="input" asp-for="Tags" />
+        <p class="help is-danger" asp-validation-for="Tags"></p>
+    </div>
+    <div class="field">
+        <label class="label" asp-for="File"></label>
+        <input type="file" class="input" asp-for="File" />
+    </div>
+    <input class="button is-success" type="submit" value="Create" />
+</form>

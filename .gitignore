@@ -7,3 +7,6 @@ appsettings.*.json
 */wwwroot/assets/
 .cache/
 */dist/
+
+Notes.Web/wwwroot/uploads/*
+!Notes.Web/wwwroot/uploads/.gitkeep

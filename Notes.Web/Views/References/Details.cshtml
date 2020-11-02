@@ -1,0 +1,23 @@
+﻿@model Reference
+
+<table class="table is-striped">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Tags</th>
+        <th>Created</th>
+        <th>Path</th>
+    </tr>
+    <tr>
+        <td>@Model.Name</td>
+        <td>@Model.Description</td>
+        <td>
+            @foreach (var tag in Model.Tags)
+            {
+                <a class="button is-link is-small" asp-action="Index" asp-route-search="tag:@tag">@tag</a>
+            }
+        </td>
+        <td>@Model.CreatedAt</td>
+        <td></td>
+    </tr>
+</table>

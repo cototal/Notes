@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Notes.Web.Data;
 using Notes.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,12 @@ namespace Notes.Web.Services
     public class NoteService
     {
         private readonly IMongoCollection<Note> _notes;
+        private readonly MongoContext _context;
 
-        public NoteService(string connectionString)
+        public NoteService(MongoContext context)
         {
-            var client = new MongoClient(connectionString);
-            var database = client.GetDatabase("notedb");
-            _notes = database.GetCollection<Note>("notes");
-
-            _notes.Indexes.CreateOne(new CreateIndexModel<Note>(
-                Builders<Note>.IndexKeys.Text(n => n.Content)));
+            _notes = context.Notes;
+            _context = context;
         }
 
         private BsonDocument SortDocument(string sortBy = "accessedAt", int sortDir = -1)
@@ -31,21 +29,13 @@ namespace Notes.Web.Services
             }
             return new BsonDocument { { "accessedAt", -1 } };
         }
-
-        private FindOptions FindOpts()
-        {
-            return new FindOptions
-            {
-                Collation = new Collation("en")
-            };
-        }
         
         public async Task<List<Note>> Find(string search = null, string sortBy = "accessedAt", int sortDir = -1)
         {
             var sortDoc = new BsonDocument { { Note.PropertyMap[sortBy], sortDir } };
             if (string.IsNullOrWhiteSpace(search))
             {
-                return await _notes.Find(n => true, FindOpts()).Sort(SortDocument(sortBy, sortDir)).Limit(50).ToListAsync();
+                return await _notes.Find(n => true, _context.FindOpts).Sort(SortDocument(sortBy, sortDir)).Limit(50).ToListAsync();
             }
             var searchSegments = search.Split(" ");
             var doc = new BsonDocument();
@@ -74,7 +64,7 @@ namespace Notes.Web.Services
                 }
             }
             // TODO: Check if document is empty (indicating invalid search) and return no results if so
-            return await _notes.Find(doc, FindOpts()).Sort(SortDocument(sortBy, sortDir)).ToListAsync();
+            return await _notes.Find(doc, _context.FindOpts).Sort(SortDocument(sortBy, sortDir)).ToListAsync();
         }
 
         public async Task<Note> FindOne(string id, bool skipAccess = false)

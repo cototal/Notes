@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Notes.Web.Config;
+using Notes.Web.Data;
 using Notes.Web.Services;
 
 namespace Notes.Web
@@ -45,9 +46,13 @@ namespace Notes.Web
                 options.KnownProxies.Clear();
             });
             services.AddSingleton<IVerifyAdminEmailOptions>(srv => new VerifyAdminEmailOptions(Configuration.GetValue<string>("AdminEmails")));
-            services.AddSingleton<NoteService>(srv => new NoteService(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddSingleton(srv => new MongoContext(Configuration.GetConnectionString("DefaultConnection")));
+            
+            services.AddSingleton<NoteService>();
             services.AddSingleton<AssetVersionFinder>();
             services.AddSingleton<MarkdownConverter>();
+
+            services.AddSingleton<ReferenceService>();
             services.AddControllersWithViews();
         }
 
